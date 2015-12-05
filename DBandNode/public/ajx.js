@@ -1,60 +1,68 @@
 //Helper Function to validate name, reps, weight and date
 function valid(name, reps, weight, date) {   
-    
     if (!name) {
-       alert("Name field can not be empty");
-       return false;
+        alert("Name field can not be empty");
+        return false;
     }
+    
     if (isNaN(reps) || isNaN(weight)){
-       alert("Not valid number input for reps or weight");
-       return false;
+        alert("Not valid number input for reps or weight");
+        return false;
     }
+    
     if(parseInt(reps) < 0 || parseInt(weight) < 0) { 
-       alert("reps or weight can not be less than 0");
-       return false;
+        alert("reps or weight can not be less than 0");
+        return false;
     }
+    
     var arr = date.split('-');
     if(arr.length != 3) {
-      alert("Not a valid date");
-      return false;
+        alert("Not a valid date");
+        return false;
+    }
+    
+    if(isNaN(arr[0]) || isNaN(arr[1]) || isNaN(arr[2])) {
+        alert("Not a valid date");
+        return false;
+    }
+    
+    var year = parseInt(arr[0]);
+    var month = parseInt(arr[1]);
+    var day = parseInt(arr[2]);
+    if (year > 2017 || year < 2000 || day < 1 || day > 31 || month < 1 || month >12) { 
+        alert("Not a valid date");
+        return false;
    }
-   if(isNaN(arr[0]) || isNaN(arr[1]) || isNaN(arr[2])) {
-      alert("Not a valid date");
-      return false;
-   }
-   var year = parseInt(arr[0]);
-   var month = parseInt(arr[1]);
-   var day = parseInt(arr[2]);
-   if (year > 2017 || year < 2000 || day < 1 || day > 31 || month < 1 || month >12) { 
-       alert("Not a valid date");
-      return false;
-   }
-  if (year % 4 == 0 && month == 2){
-     	if (day > 29){
-           alert("Not a valid date");
-           return false;
-        }
-   }
- if (year % 4 != 0 && month == 2){
-        if (day > 28){
-           alert("Not a valid date");
-           return false;
+  
+    if (year % 4 == 0 && month == 2){
+        if (day > 29){
+            alert("Not a valid date");
+            return false;
         }
     }
+ 
+    if (year % 4 != 0 && month == 2){
+        if (day > 28){
+            alert("Not a valid date");
+            return false;
+        }
+    }
+    
     if (month == 1 ||  month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
         if (day > 31){
-           alert("Not a valid date");
-           return false;
+            alert("Not a valid date");
+            return false;
         }
     }
-   if (month == 4 ||  month == 6 || month == 9 || month == 11){
+   
+    if (month == 4 ||  month == 6 || month == 9 || month == 11){
         if (day > 30){
-           alert("Not a valid date");
-           return false;
+            alert("Not a valid date");
+            return false;
         }
     }
 
-  return true;
+    return true;
 }
 
 //Ajax call to inserts into tables
@@ -67,27 +75,29 @@ document.getElementById('newentry').addEventListener('click', function(event){
     var lbs  = document.getElementById('lbs').value;
 
     if(!valid(name, reps, weight, date)){
-      return;
+        return;
     }
+    
     if (lbs === "lbs"){
-       lbs = 1;
+        lbs = 1;
     }
    
     else {
-       var lbs = 0;
+        var lbs = 0;
     }
 
     req.open('GET', 'http://52.10.150.58:3000/insert?name='+name+'&reps='+reps+'&weight='+weight+'&date='+date+'&lbs='+lbs, true);
  
     req.addEventListener('load',function(){
-      if(req.status >= 200 && req.status < 400){
-        document.getElementById('result').innerHTML = req.responseText;
-      } else {
-        console.log("Error in network request: " + request.statusText);
-      }});
+        if(req.status >= 200 && req.status < 400){
+            document.getElementById('result').innerHTML = req.responseText;
+        } else {
+            console.log("Error in network request: " + request.statusText);
+        }});
+        
     req.send();
     event.preventDefault();
-  });
+});
 
 function del(str){
     var req = new XMLHttpRequest();
@@ -95,11 +105,12 @@ function del(str){
     req.open('GET', 'http://52.10.150.58:3000/delete?id='+str, true);
 
     req.addEventListener('load',function(){
-      if(req.status >= 200 && req.status < 400){
-        document.getElementById('result').innerHTML = req.responseText;
-      } else {
-        console.log("Error in network request: " + request.statusText);
-      }});
+        if(req.status >= 200 && req.status < 400){
+            document.getElementById('result').innerHTML = req.responseText;
+        } else {
+            console.log("Error in network request: " + request.statusText);
+        }});
+    
     req.send();
     event.preventDefault();
 }
@@ -111,11 +122,11 @@ function update(str){
     req.open('GET', 'http://52.10.150.58:3000/update-row?id='+str, true);
 
     req.addEventListener('load',function(){
-      if(req.status >= 200 && req.status < 400){
-        document.getElementById('result').innerHTML = req.responseText;
-      } else {
-        console.log("Error in network request: " + request.statusText);
-      }});
+        if(req.status >= 200 && req.status < 400){
+            document.getElementById('result').innerHTML = req.responseText;
+        } else {
+            console.log("Error in network request: " + request.statusText);
+        }});
     req.send();
     event.preventDefault();
 }
@@ -131,28 +142,28 @@ function save(str){
     var lbs = row[4].value;
    
     if(!valid(name, reps, weight, date)){
-      return;
+        return;
     }
   
     if(isNaN(lbs)) { 
-       alert("Enter 1 for lbs and 0 for kg.");
-       return;
+        alert("Enter 1 for lbs and 0 for kg.");
+        return;
     }
     
     if(parseInt(lbs) > 1 || parseInt(lbs)<0) {
-       alert("Enter 1 for lbs and 0 for kg.");
-       return;
+        alert("Enter 1 for lbs and 0 for kg.");
+        return;
     }
 
 
     req.open('GET', 'http://52.10.150.58:3000/update?name='+name+'&reps='+reps+'&weight='+weight+'&date='+date+'&lbs='+lbs+'&id='+str, true);
 
     req.addEventListener('load',function(){
-      if(req.status >= 200 && req.status < 400){
-        document.getElementById('result').innerHTML = req.responseText;
-      } else {
-        console.log("Error in network request: " + request.statusText);
-      }});
+        if(req.status >= 200 && req.status < 400){
+            document.getElementById('result').innerHTML = req.responseText;
+        } else {
+            console.log("Error in network request: " + request.statusText);
+        }});
     req.send();
     event.preventDefault();
 }
