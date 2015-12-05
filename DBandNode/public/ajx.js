@@ -90,7 +90,7 @@ document.getElementById('newentry').addEventListener('click', function(event){
  
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
-            document.getElementById('result').innerHTML = req.responseText;
+            document.getElementById('result').innerHTML = req.responseText; //Recieved HTML snippet from server side for complete table
         } else {
             console.log("Error in network request: " + request.statusText);
         }});
@@ -106,7 +106,7 @@ function del(str){
 
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
-            document.getElementById('result').innerHTML = req.responseText;
+            document.getElementById('result').innerHTML = req.responseText;  //Recieved HTML snippet from server side for complete table
         } else {
             console.log("Error in network request: " + request.statusText);
         }});
@@ -123,7 +123,7 @@ function update(str){
 
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
-            document.getElementById('result').innerHTML = req.responseText;
+            document.getElementById('result').innerHTML = req.responseText;  //Recieved HTML snippet from server side for complete table
         } else {
             console.log("Error in network request: " + request.statusText);
         }});
@@ -160,7 +160,7 @@ function save(str){
 
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
-            document.getElementById('result').innerHTML = req.responseText;
+            document.getElementById('result').innerHTML = req.responseText;  //Recieved HTML snippet from server side for complete table
         } else {
             console.log("Error in network request: " + request.statusText);
         }});
