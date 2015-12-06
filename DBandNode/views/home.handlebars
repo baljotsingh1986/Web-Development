@@ -1,44 +1,32 @@
-<header>
-	<div style="font-style: oblique; text-align:center;border:1px solid red; background-color: azure; margin: auto; width: 500px; height:auto;">
+<div style="font-style: oblique; text-align:center;border:1px solid red; background-color: azure; margin: auto; width: 500px; height:auto;">
+    <h3>Simple application to track workout</h3>
+</div>
 
-                <h3>Simple application to track workout</h3>
-        </div>
-</header>
 <h2 style="text-align:center;">{{{tablereset}}}</h2>
-<div class="container">
-   <p>
-            <div>
-                <form method="post"  role="form"> 
-                    <fieldset>
-                        <div class="form-group">
-                            <legend>New Entry</legend>
-                            <p>Name: <input id="name" type="text" name="name" class="form-control"/></p>
-                            <p>Reps: <input id="reps" type="text" name="reps" class="form-control"/></p>
-                            <p>Weight: <input id="weight" type="text" name="weight" class="form-control"/></p>
-			    <p>Date: <input id="date" type="date" name="date"  class="form-control"/></p>
-			    <p>lbs or kg:<select id="lbs" class="form-control">
-						<option value="lbs">lbs</option>
-						<option value="kg">kg</option> 
-                                         </select></p>
-                            <p><input id="newentry" type="button" value="Add" class="btn btn-default"/></p>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            </p>
 
-<div id="result">
-<table class="table table-striped" >
-	<tr>	
-	  <th>Name</th>
-	  <th>Reps</th>
-	  <th>Weight</th>
-	  <th>Date</th>
-          <th>lbs or kg</th>
-          <th>Action</th>
-	 </tr>
-         {{{results}}}
-</table>
+<div class="container">
+    <p>
+    <div>
+        <form method="post"  role="form">
+            <fieldset>
+                <div class="form-group">
+                    <legend>New Entry</legend>
+                    <p>Name: <input id="name" type="text" name="name" class="form-control"/></p>
+                    <p>Reps: <input id="reps" type="text" name="reps" class="form-control"/></p>
+                    <p>Weight: <input id="weight" type="text" name="weight" class="form-control"/></p>
+                    <p>Date: <input id="date" type="date" name="date"  class="form-control"/></p>
+                    <p>lbs or kg:<select id="lbs" class="form-control">
+                        <option value="lbs">lbs</option>
+                        <option value="kg">kg</option>
+                    </select></p>
+                    <p><input id="newentry" type="button" value="Add" class="btn btn-default"/></p>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    </p>
+    <div id="result">
+        {{{result}}}
+    </div>
 </div>
-</div>
- <script src="/ajx.js"></script>
+<script src="/ajx.js"></script>
