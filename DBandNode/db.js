@@ -1,5 +1,3 @@
-//Hosting: http://52.10.150.58:3000/get
-
 /*File Name: db.js
 *Author: Baljot Singh
 *Purpose: To get requests from client side to display, update, insert, delete data into
