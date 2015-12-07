@@ -49,7 +49,7 @@ function valid(name, reps, weight, date) {
     if (year % 4 != 0 && month == 2){
         if (day > 28){
             alert("Not a valid date");
-        return false;
+ return false;
         }
     }
 
@@ -149,7 +149,7 @@ function changee(oldInputs){
             newInput.setAttribute('class','btn btn-default');
             newInput.setAttribute('onClick', 'del(this.name)');
             nex.appendChild(newInput);
-            var newInput = document.createElement('input');
+ var newInput = document.createElement('input');
             newInput.setAttribute('name', id2);
             newInput.setAttribute('type','button');
             newInput.setAttribute('value', 'Update');
@@ -199,7 +199,7 @@ function update(str){
             var month = d.getMonth() + 1;
             var date = year+'-'+month+'-'+day;
             cells[i].textContent = "YYYY-MM-DD";
-            newInputElement.setAttribute('value', date);
+ newInputElement.setAttribute('value', date);
             newInputElement.setAttribute('preval', date);
             cells[i].appendChild(newInputElement);
 
@@ -297,7 +297,8 @@ document.getElementById('newentry').addEventListener('click', function(event){
             //As there is only one table get the parent of rows and append new row to it
             var rows = document.getElementsByTagName('tr');
             rows[0].parentElement.appendChild(row);
- } else {
+
+        } else {
             console.log("Error in network request: " + req.statusText);
         }});
 
@@ -384,3 +385,4 @@ function save(str){
         }});
     req.send();
     event.preventDefault();
+}                    
