@@ -6,8 +6,8 @@
 
 //Helper Function to validate name, reps, weight and date
 function valid(name, reps, weight, date) {
-    if (!name) {
-        alert("Name field can not be empty");
+    if (!name || !reps || !weight) {
+        alert("Empty fields are not allowed");
         return false;
     }
 
@@ -49,7 +49,7 @@ function valid(name, reps, weight, date) {
     if (year % 4 != 0 && month == 2){
         if (day > 28){
             alert("Not a valid date");
-            return false;
+        return false;
         }
     }
 
@@ -76,14 +76,15 @@ function reTrace(oldInputs){
     var id2;
     var len = oldInputs.length;
     var arr = []; //Empty array to add values of input
-    
+
     //If there is not elemenet of name value update this loop will not execute len will be 0
     for (var i = 0; i < len; i++){
-        var par = oldInputs[i].parentElement;
-        arr.push(oldInputs[i].value);
+        var val = oldInputs[i].getAttribute('preval');
+        arr.push(val);
 
         //If it is end of old inputs change the button in next cell
         if (i == (len-1)){
+            var par = oldInputs[i].parentElement;
             var nex = par.nextElementSibling;
             var child = nex.childNodes;
             id2 = child[0].getAttribute('name');
@@ -122,6 +123,57 @@ function reTrace(oldInputs){
     }
 }
 
+//Takes an array of html elements with name value as 'update'
+function changee(oldInputs){
+    var id2;
+    var len = oldInputs.length;
+    var arr = []; //Empty array to add values of input
+
+    //If there is not elemenet of name value update this loop will not execute len will be 0
+    for (var i = 0; i < len; i++){
+        var val = oldInputs[i].value;
+        arr.push(val);
+
+        //If it is end of old inputs change the button in next cell
+        if (i == (len-1)){
+            var par = oldInputs[i].parentElement;
+            var nex = par.nextElementSibling;
+            var child = nex.childNodes;
+            id2 = child[0].getAttribute('name');
+            nex.removeChild(child[0]);
+
+            var newInput = document.createElement('input');
+            newInput.setAttribute('name', id2);
+            newInput.setAttribute('type','button');
+            newInput.setAttribute('value', 'Delete');
+            newInput.setAttribute('class','btn btn-default');
+            newInput.setAttribute('onClick', 'del(this.name)');
+            nex.appendChild(newInput);
+            var newInput = document.createElement('input');
+            newInput.setAttribute('name', id2);
+            newInput.setAttribute('type','button');
+            newInput.setAttribute('value', 'Update');
+            newInput.setAttribute('class','btn btn-default');
+            newInput.setAttribute('onClick', 'update(this.name)');
+            nex.appendChild(newInput);
+
+            //Change the cells from input to show text
+            id2 = id2.trim();
+            var oldRow = document.getElementById(id2).getElementsByTagName('td');
+            for (var i = 0; i < arr.length; i++){
+                if(i == 3){
+                    d = new Date(arr[i]);
+                    oldRow[i].textContent = d.toUTCString().slice(0, -13);
+                }
+
+                else{
+                    oldRow[i].textContent = arr[i];
+                }
+            }
+        }
+    }
+}
+
 //Function to make the selcted row editable by user
 function update(str){
 
@@ -133,7 +185,7 @@ function update(str){
 
     var row = document.getElementById(id);
     var cells = row.getElementsByTagName('td');
-    
+
     //For loop to change the row to editable
     for (var i = 0; i < cells.length - 1; i++){
         var newInputElement = document.createElement('input');
@@ -162,7 +214,7 @@ function update(str){
         }
 
     } //End of for loop
-  
+
     //Change the button for last cell
     cells[cells.length-1].textContent = "";
     var newInputElement = document.createElement('input');
@@ -177,9 +229,9 @@ function update(str){
 //Ajax call to inserts into tables
 document.getElementById('newentry').addEventListener('click', function(event){
     var req = new XMLHttpRequest();
-    var name  = document.getElementById('name').value;
-    var reps  = document.getElementById('reps').value;
-    var weight  = document.getElementById('weight').value;
+    var name  = document.getElementById('name').value.trim();
+    var reps  = document.getElementById('reps').value.trim();
+    var weight  = document.getElementById('weight').value.trim();
     var date  = document.getElementById('date').value;
     var lbs  = document.getElementById('lbs').value;
 
@@ -196,8 +248,7 @@ document.getElementById('newentry').addEventListener('click', function(event){
     }
 
     req.open('GET', 'http://52.10.150.58:3000/insert?name='+name+'&reps='+reps+'&weight='+weight+'&date='+date+'&lbs='+lbs, true);
-
-    req.addEventListener('load',function(){
+ req.addEventListener('load',function(){
         //If request is successfull create a row in table on client side
         if(req.status >= 200 && req.status < 400){
             var id = req.responseText;  //Get the id of inserted row as reponse from server as plain text
@@ -208,10 +259,10 @@ document.getElementById('newentry').addEventListener('click', function(event){
             arr.push(weight);
             arr.push(date);
             arr.push(lbs);
-            
+
             var row = document.createElement('tr'); //Create html element for new row
             row.setAttribute('id',id);  //Set attribute to id
-            
+
             for(var i = 0; i < arr.length; i++){
                 var cell = document.createElement('td');
                 if (i == 3){
@@ -242,12 +293,11 @@ document.getElementById('newentry').addEventListener('click', function(event){
             newInput.setAttribute('onClick', 'update(this.name)');
             cell.appendChild(newInput);
             row.appendChild(cell);
-            
+
             //As there is only one table get the parent of rows and append new row to it
             var rows = document.getElementsByTagName('tr');
             rows[0].parentElement.appendChild(row);
-
-        } else {
+ } else {
             console.log("Error in network request: " + req.statusText);
         }});
 
@@ -280,18 +330,24 @@ function del(str){
 function save(str){
     var req = new XMLHttpRequest();
     var row  = document.getElementsByName("update");
-    var name = row[0].value;
-    var reps = row[1].value;
-    var weight = row[2].value;
-    var date = row[3].value;
-    var lbs = row[4].value;
+    var name = row[0].value.trim();
+    var reps = row[1].value.trim();
+    var weight = row[2].value.trim();
+    var date = row[3].value.trim();
+    var lbs = row[4].value.trim();
 
     if(!valid(name, reps, weight, date)){
         return;
     }
 
-    if(isNaN(lbs)) {
+    if(!lbs) {
         alert("Enter 1 for lbs and 0 for kg.");
+        return;
+    }
+
+
+    if(isNaN(lbs)) {
+  alert("Enter 1 for lbs and 0 for kg.");
         return;
     }
 
@@ -300,7 +356,7 @@ function save(str){
         return;
     }
     var change = false;
-    
+
     //Check if any value is changed by user
     for (var i = 0; i < row.length; i++){
         var prev = row[i].getAttribute('preval');
@@ -310,22 +366,21 @@ function save(str){
             break;
         }
     }
-    
+
     //If date is not change by user just save as it is and return no need to call server
     if(!change){
         reTrace(row);
         return;
     }
-    
-    //Other wise call server to update and retrace after
+
+    //Other wise call server to update and change after
     req.open('GET', 'http://52.10.150.58:3000/update?name='+name+'&reps='+reps+'&weight='+weight+'&date='+date+'&lbs='+lbs+'&id='+str, true);
 
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
-            reTrace(row);
+            changee(row);
         } else {
             console.log("Error in network request: " + req.statusText);
         }});
     req.send();
     event.preventDefault();
-}
