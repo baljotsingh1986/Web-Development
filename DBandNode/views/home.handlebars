@@ -2,14 +2,10 @@
     <h3>Simple application to track workout</h3>
 </div>
 
-<h2 style="text-align:center;">{{{tablereset}}}</h2>
-
 <div class="container">
-    <p>
-    <div>
-        <form method="post"  role="form">
+    <div class="form-group">
+        <form method="post">
             <fieldset>
-                <div class="form-group">
                     <legend>New Entry</legend>
                     <p>Name: <input id="name" type="text" name="name" class="form-control"/></p>
                     <p>Reps: <input id="reps" type="text" name="reps" class="form-control"/></p>
@@ -20,13 +16,12 @@
                         <option value="kg">kg</option>
                     </select></p>
                     <p><input id="newentry" type="button" value="Add" class="btn btn-default"/></p>
-                </div>
             </fieldset>
         </form>
     </div>
-    </p>
     <div id="result">
         {{{result}}}
     </div>
 </div>
 <script src="/ajx.js"></script>
+

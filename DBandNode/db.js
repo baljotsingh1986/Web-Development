@@ -1,3 +1,5 @@
+//Hosting: http://52.10.150.58:3000/get
+
 /*File Name: db.js
 *Author: Baljot Singh
 *Purpose: To get requests from client side to display, update, insert, delete data into
@@ -7,9 +9,9 @@
 var mySql = require('mysql');
 var pool = mySql.createPool({
         host  : 'localhost',
-        user  : 'user',
-        password: 'password',
-        database: 'database'
+        user  : 'student',
+        password: 'default',
+        database: 'student'
     });
 
 var express = require('express');
@@ -43,7 +45,7 @@ function getData(res, next, str){
             table += "<td>" + rows[i].weight + "</td>\n";
             table += "<td>" + rows[i].date.toUTCString().slice(0, -13) + "</td>\n";
             table += "<td>" + rows[i].lbs + "</td>\n";
-            table += '<td><input name="'+rows[i].id+'" type="button" value="Delete" class="btn btn-default" onClick="del(this.name)"><input name="'+rows[i].id+' "type="button" value="Update" class="btn btn-default" onClick="update(this.name)"></td>\n';
+            table += '<td><input name="'+rows[i].id+'" type="button" value="Delete" class="btn btn-default" onClick="del(this.name)"><input name="'+rows[i].id+'" type="button" value="Update" class="btn btn-default" onClick="update(this.name)"></td>\n';
             table += "</tr>\n";
         }
 
@@ -66,7 +68,7 @@ app.get('/reset-table',function(req,res,next){
                     "lbs BOOLEAN)";
             pool.query(createString, function(err){
                 context.tablereset = "<p><b>Table Reset</b></p>";
-                res.render('home',context);
+                res.render('data',context);
             });
     });
 });
@@ -138,3 +140,4 @@ app.use(function(err, req, res, next){
 app.listen(app.get('port'), function(){
     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
+
