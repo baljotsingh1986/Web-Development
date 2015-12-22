@@ -1,0 +1,97 @@
+#container {
+    width: 800px;
+    position: relative;
+    margin: auto;
+}
+
+#header {
+    font-family: "Lucida" Grande, sans-serif;
+    font-size: 30px;
+    width: 450px;
+    position: relative;
+    margin: auto;
+    color:blueviolet;
+    background-color: gainsboro;
+    text-align: center;
+    border-radius: 1em;
+}
+
+#table {
+    background-color: gainsboro;
+    border-radius: 0.5em;
+}
+
+.form {
+    font-size: 20px;
+    background-color: lightblue;
+    text-align: center;
+    font-family: "Lucida" Grande, sans-serif;
+    border-radius: 0.5em;
+}
+
+p {
+    background-color: cadetblue;
+    width: 300px;
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 0.5em;
+}
+
+input, select {
+    border-radius: 0.5em;
+    font: 1em sans-serif;
+    border: 1px solid #999;
+}
+
+select {
+    position: relative;
+    margin-top: 10px;
+}
+
+#data {
+    position: relative;
+    margin-top: 10px;
+    width: 600px;
+    height: auto;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+input:focus {
+    border-color: aquamarine;
+}
+
+.button {
+    position: relative;
+    margin-top: 10px;
+    width:auto;
+}
+
+table {
+    border-collapse: collapse;
+    margin: auto;
+    width: 500px;
+    font-family: sans-serif;
+}
+
+tr:nth-child(even) {
+    background-color:burlywood;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid red;
+}
+
+th {
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+@media screen and (max-width: 680px) {
+
+    #header, #container, table, .form, p, #data {
+        width: 100%
+    }
+}
